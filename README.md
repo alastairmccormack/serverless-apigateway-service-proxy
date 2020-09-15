@@ -683,6 +683,14 @@ Any published SQS message will have the `Custom-Header` value added as a message
 
 ### Customizing request body mapping templates
 
+The following examples require **serverless-cloudformation-sub-variables** plugin. Be sure to install with:
+
+```
+sls plugin install -n serverless-cloudformation-sub-variables
+```
+
+Note: serverless-pseudo-parameters plugin is not compatible with serverless-cloudformation-sub-variables plugin variables.
+
 #### Kinesis
 
 If you'd like to add content types or customize the default templates, you can do so by including your custom [API Gateway request mapping template](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html) in `serverless.yml` like so:
@@ -711,8 +719,10 @@ custom:
                       "StreamName": "#{MyStreamArn}"
                   }
                 - MyStreamArn:
-                    Fn::GetAtt: [MyStream, Arn]
+                    Ref: MyStream
 ```
+
+
 
 > It is important that the mapping template will return a valid `application/json` string
 
